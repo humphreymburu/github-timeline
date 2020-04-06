@@ -1,20 +1,24 @@
-import React, { Component } from 'react'
+import React, { useEffect, useContext} from 'react'
 import Spinner from '../layouts/Spinner';
 import  Repos  from '../repos/Repos';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import githubContext from '../../context/github/githubContext';
 
 
+const User = ({ match}) => {
+ const GithubContext = useContext(githubContext);
 
-class User extends Component {
+const { getUser, loading, user, repos, getUserRepos } = GithubContext;
+
+useEffect(() => {
+  getUser(match.params.login);
+  getUserRepos(match.params.login);
+  // eslint-disable-next-line
+}, []);
+   
+
  
-    componentDidMount() {
-        this.props.getUser(this.props.match.params.login);
-        this.props.getUserRepos(this.props.match.params.login);
-    }
- 
- 
-    render() {
 
   const {
       name,
@@ -30,11 +34,8 @@ class User extends Component {
       public_repos,
       public_gists,
       hireable
-  } = this.props.user;
+  } = user;
 
-
-
-const { loading, repos } = this.props;
 
 if (loading) return <Spinner />;
     return (
@@ -106,7 +107,6 @@ if (loading) return <Spinner />;
       <Repos repos={repos} />
       </>
     )
-  }
 }
 
 export default User
