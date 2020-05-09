@@ -8,7 +8,8 @@ import {
     SET_LOADING,
     CLEAR_USERS,
     GET_USER,
-    GET_REPOS
+    GET_REPOS,
+    GET_TIMELINES
 } from './types';
 
 const GithubState = props => {
@@ -16,6 +17,7 @@ const GithubState = props => {
         users: [],
         user: {},
         repos: [],
+        timelines: [],
         loading: false
     }
 
@@ -62,8 +64,28 @@ const GithubState = props => {
         const res = await axios.get(
           `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc$client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
         `);
+
+      
+      console.log("repos", res.data);
+
        dispatch({
            type: GET_REPOS,
+           payload: res.data
+       });
+    };
+
+     // get repos
+     const getUserTimelines = async username => {
+        setloading();
+
+        const res = await axios.get(
+          `https://api.github.com/users/${username}/received_events?per_page=5&sort=created:asc$client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
+        `);
+
+      console.log(res.data);
+
+       dispatch({
+           type: GET_TIMELINES,
            payload: res.data
        });
     };
@@ -81,11 +103,13 @@ const GithubState = props => {
             users:state.users,
             user: state.user,
             repos:state.repos,
+            timelines: state.timelines,
             loading: state.loading,
             searchUsers,
             getUser,
             clearUsers,
-            getUserRepos
+            getUserRepos,
+            getUserTimelines
           
 
         }}

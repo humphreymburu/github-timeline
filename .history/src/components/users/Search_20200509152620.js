@@ -34,7 +34,7 @@ const Search = () => {
             placeholder='Search users...' 
             value={text}
             onChange={onChange} />
-            <input type='submit' value='Search' className='btn btn-primary btn-block space' />
+            <input type='submit' value='Search' className='btn btn-dark btn-block' />
         </form>
         { GithubContext.users.length > 0 && (
           <button className="btn btn-ligt btn-block" onClick={githubContext.clearUsers}>

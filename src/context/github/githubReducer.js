@@ -3,7 +3,8 @@ import {
     SET_LOADING,
     CLEAR_USERS,
     GET_USER,
-    GET_REPOS
+    GET_REPOS,
+    GET_TIMELINES
 } from './types';
 
 
@@ -31,6 +32,12 @@ export default (state,action) => {
             return {
                 ...state,
                 repos: action.payload,
+                loading: false
+            }
+        case GET_TIMELINES:
+            return {
+                ...state,
+                timelines: action.payload,
                 loading: false
             }
         case SET_LOADING:

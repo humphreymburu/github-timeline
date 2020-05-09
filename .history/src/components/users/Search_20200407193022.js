@@ -34,13 +34,21 @@ const Search = () => {
             placeholder='Search users...' 
             value={text}
             onChange={onChange} />
-            <input type='submit' value='Search' className='btn btn-primary btn-block space' />
+            <input type='submit' value='Search' className='btn btn-dark btn-block' />
         </form>
         { GithubContext.users.length > 0 && (
           <button className="btn btn-ligt btn-block" onClick={githubContext.clearUsers}>
           Clear
         </button>
         )}
+
+<Form>
+  <Form.Group controlId="exampleForm.ControlInput1">
+    <Form.Label>Email address</Form.Label>
+    <Form.Control type="email" placeholder="name@example.com" />
+  </Form.Group>
+  </Form>
+        
       </>
     )
 }
